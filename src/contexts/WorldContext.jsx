@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useRef } from 'react'
 import * as CANNON from 'cannon'
 
 import { diceBodyMaterial, floorBodyMaterial } from '../constants/body'
-import { useFrame } from '@react-three/fiber'
 
 const worldContext = createContext({})
 

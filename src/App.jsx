@@ -10,6 +10,7 @@ import { Sky } from './components/Sky'
 import { Ground } from './components/Ground'
 import { DiceManager } from './components/DiceManager'
 import { Controls } from './components/Controls'
+import { Debugger } from './components/Debugger'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Sky />
             <DiceManager />
             <Ground />
+            <Debugger />
           </Canvas>
         </div>
       </DiceProvider>
