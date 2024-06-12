@@ -1,4 +1,5 @@
-import { useState } from "react";
+import Mousetrap from "mousetrap";
+import { useEffect, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import {
   Drawer,
@@ -18,6 +19,20 @@ export function Controls() {
 
   const { clearDices, rollDices, preparedDices, setPreparedDices } =
     useDiceContext();
+
+  useEffect(() => {
+    Mousetrap.bind("i", toggleOpen);
+    Mousetrap.bind("c", handleClear);
+
+    return () => {
+      Mousetrap.unbind("i");
+      Mousetrap.unbind("c");
+    };
+  }, []);
+
+  function toggleOpen() {
+    setOpen((prev) => !prev);
+  }
 
   function handleRoll() {
     setOpen(false);
@@ -39,7 +54,7 @@ export function Controls() {
           </button>
         </div>
       </DrawerTrigger>
-      <DrawerContent className="border-zinc-800 bg-zinc-900">
+      <DrawerContent className="border-zinc-800 bg-zinc-900 outline-none">
         <div className="mx-auto w-full max-w-sm text-white">
           <DrawerHeader>
             <DrawerTitle>Escolher dados</DrawerTitle>
@@ -49,21 +64,21 @@ export function Controls() {
           </DrawerHeader>
           <div className="my-2 flex flex-col items-center px-4">
             <button
-              className="flex h-8 w-8 w-fit shrink-0 items-center justify-center rounded-full border border-zinc-400 text-lg font-medium"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-zinc-400 text-lg font-medium"
               onClick={() => setPreparedDices(preparedDices + 1)}
             >
-              <Plus />
+              <Plus className="h-4 w-4" />
             </button>
             <p className="my-2 text-lg font-medium">{preparedDices}</p>
             <button
               className={classnames({
-                "flex h-8 w-8 w-fit items-center justify-center rounded-full border border-zinc-400 text-lg font-medium transition": true,
+                "flex h-8 w-8 items-center justify-center rounded-full border border-zinc-400 text-lg font-medium transition": true,
                 "cursor-not-allowed border-zinc-600 text-zinc-600":
                   preparedDices === 0,
               })}
               onClick={() => setPreparedDices(Math.max(preparedDices - 1, 0))}
             >
-              <Minus />
+              <Minus className="h-4 w-4" />
             </button>
             <button
               className="self-end font-thin text-zinc-300"
