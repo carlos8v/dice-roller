@@ -12,23 +12,50 @@ import {
   DrawerTrigger,
 } from "./UI/Drawer";
 import { useDiceContext } from "../contexts/DiceContext";
-import { classnames } from "../utils";
+import { classnames } from "../utils/classnames";
+import { shortcuts } from "../utils/shortcuts";
 
 export function Controls() {
   const [open, setOpen] = useState(false);
 
-  const { clearDices, rollDices, preparedDices, setPreparedDices } =
+  const { clearDices, rollDices, preparedDices, addDice, removeDice } =
     useDiceContext();
 
   useEffect(() => {
-    Mousetrap.bind("i", toggleOpen);
-    Mousetrap.bind("c", handleClear);
+    const unsubscribe = shortcuts([
+      {
+        key: "i",
+        callback: toggleOpen,
+      },
+      {
+        key: "c",
+        callback: clearDices,
+      },
+    ]);
 
-    return () => {
-      Mousetrap.unbind("i");
-      Mousetrap.unbind("c");
-    };
+    return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    if (open) {
+      const unsubscribe = shortcuts([
+        {
+          key: "enter",
+          callback: handleRoll,
+        },
+        {
+          key: ["up", "w"],
+          callback: addDice,
+        },
+        {
+          key: ["down", "s"],
+          callback: removeDice,
+        },
+      ]);
+
+      return unsubscribe;
+    }
+  }, [open]);
 
   function toggleOpen() {
     setOpen((prev) => !prev);
@@ -36,13 +63,7 @@ export function Controls() {
 
   function handleRoll() {
     setOpen(false);
-    clearDices();
     rollDices();
-  }
-
-  function handleClear() {
-    clearDices();
-    setPreparedDices(0);
   }
 
   return (
@@ -65,7 +86,7 @@ export function Controls() {
           <div className="my-2 flex flex-col items-center px-4">
             <button
               className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-zinc-400 text-lg font-medium"
-              onClick={() => setPreparedDices(preparedDices + 1)}
+              onClick={addDice}
             >
               <Plus className="h-4 w-4" />
             </button>
@@ -76,13 +97,13 @@ export function Controls() {
                 "cursor-not-allowed border-zinc-600 text-zinc-600":
                   preparedDices === 0,
               })}
-              onClick={() => setPreparedDices(Math.max(preparedDices - 1, 0))}
+              onClick={removeDice}
             >
               <Minus className="h-4 w-4" />
             </button>
             <button
               className="self-end font-thin text-zinc-300"
-              onClick={handleClear}
+              onClick={clearDices}
             >
               Limpar
             </button>
