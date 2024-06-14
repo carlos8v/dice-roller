@@ -1,8 +1,9 @@
 {
-  "name": "dice",
-  "private": true,
+  "name": "dice-roller",
   "version": "0.0.0",
   "type": "module",
+  "license": "MIT",
+  "author": "Carlos Souza <carlos.pessoal@hotmail.com>",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

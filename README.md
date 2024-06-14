@@ -1,8 +1,19 @@
-# React + Vite
+# Dice Roller 🎲
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Simple 3D Dice Roller
 
-Currently, two official plugins are available:
+![Screenshot Image](./assets/screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Achievements ✨
+- [x] 3D Environment
+- [x] Lights and shadows
+- [x] Basic physics
+- [x] Dice selection and throw
+
+### Roadmap 🚀
+- [x] Add D6 dice
+- [ ] Add D4 dice
+- [ ] Add D8 dice
+- [ ] Add D10 dice
+- [ ] Add D12 dice
+- [ ] Add D20 dice
