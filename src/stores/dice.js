@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import * as CANNON from "cannon";
+import * as CANNON from "cannon-es";
 import { diceBodyMaterial } from "../constants/body";
 
 /**
  * @typedef {Object} Dice
  * @property {string} id
- * @property {import('cannon').Body} body
+ * @property {import('cannon-es').Body} body
  */
 
 /**
@@ -48,9 +48,10 @@ function createDice(idx) {
     id: `${Date.now().toString()}-${idx}`,
     body: new CANNON.Body({
       mass: 0.3,
+      allowSleep: true,
       shape: new CANNON.Box(new CANNON.Vec3(0.75, 0.75, 0.75)),
       material: diceBodyMaterial,
-      sleepTimeLimit: 0.02,
+      sleepTimeLimit: 0.1,
     }),
   };
 }

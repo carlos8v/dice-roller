@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { useEffect } from 'react'
-import * as CANNON from 'cannon'
+import * as CANNON from 'cannon-es'
 import { floorBodyMaterial } from '../constants/body'
 import { useWorld } from '../contexts/WorldContext'
 

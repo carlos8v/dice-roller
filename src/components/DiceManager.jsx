@@ -8,7 +8,8 @@ import { useWorld } from "../contexts/WorldContext";
 /**
  * @typedef {Object} DiceRef
  * @property {import('three').Mesh} mesh
- * @property {import('cannon').Body} body
+ * @property {import('cannon-es').Body} body
+ * @property {(e: React.ChangeEvent<import('cannon-es').Body>) => number} getTopsideValue
  */
 
 export function DiceManager() {
@@ -22,7 +23,14 @@ export function DiceManager() {
 
   useEffect(() => {
     dicesRef.current = dicesRef.current.slice(0, dices.length);
-    dicesRef.current.forEach(getRandomDirection);
+    dicesRef.current.forEach((dice, idx) => {
+      getRandomDirection(dice, idx);
+      dice.body.addEventListener("sleep", (e) => {
+        // TODO: remove console.log and display result on screen
+        console.log(dice.getTopsideValue(e));
+      });
+      dice.body.allowSleep = true;
+    });
   }, [dices]);
 
   useFrame(() => {
@@ -42,12 +50,12 @@ export function DiceManager() {
   });
 
   /**
-   * @param {import('three').Mesh} mesh
-   * @param {import('cannon').Body} body
+   * @param {Omit<DiceRef, 'body'>} ref
+   * @param {import('cannon-es').Body} body
    * @param {number} idx
    */
-  function handleRef(mesh, body, idx) {
-    dicesRef.current[idx] = { mesh, body };
+  function handleRef(ref, body, idx) {
+    dicesRef.current[idx] = { ...ref, body };
   }
 
   /**
@@ -80,7 +88,7 @@ export function DiceManager() {
       {dices.map((dice, idx) => (
         <Dice
           key={dice.id}
-          ref={(mesh) => handleRef(mesh, dice.body, idx)}
+          ref={(ref) => handleRef(ref, dice.body, idx)}
           body={dice.body}
         />
       ))}
