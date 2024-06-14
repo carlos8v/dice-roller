@@ -21,13 +21,14 @@ function App() {
         <ValueDisplay />
         <DiceDrawer />
         <div id="canvas-container" className="overflow-hidden">
-          <Canvas scene={{ fog: new THREE.FogExp2(0x444444, 0.00025) }}>
-            <Camera />
-            <Lights />
-            <Sky />
-            <DiceManager />
-            <Ground />
-            <Debugger />
+          <Canvas scene={{ fog: new THREE.FogExp2(0x444444, 0.00025) }} shadows>
+            <Debugger>
+              <Camera />
+              <Lights />
+              <Sky />
+              <DiceManager />
+              <Ground />
+            </Debugger>
           </Canvas>
         </div>
       </DiceProvider>

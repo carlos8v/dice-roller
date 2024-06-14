@@ -1,13 +1,18 @@
-import { useHelper } from '@react-three/drei'
-import { useRef } from 'react'
-import { DirectionalLightHelper, SpotLightHelper } from 'three'
+import { useHelper } from "@react-three/drei";
+import { DirectionalLightHelper, SpotLightHelper } from "three";
+import { useRef } from "react";
+
+import { useDebugger } from "./Debugger";
 
 export function Lights() {
-  const spotLight = useRef(null)
-  const directionLight = useRef(null)
+  const debuggerEnabled = useDebugger();
+  const spotLight = useRef(null);
+  const directionLight = useRef(null);
 
-  // useHelper(spotLight, SpotLightHelper)
-  // useHelper(directionLight, DirectionalLightHelper)
+  useHelper(spotLight, debuggerEnabled ? SpotLightHelper : null, {
+    color: 0xff0000,
+  });
+  useHelper(directionLight, debuggerEnabled ? DirectionalLightHelper : null);
 
   return (
     <>
@@ -18,16 +23,14 @@ export function Lights() {
         intensity={1}
         position={[-10, 10, 10]}
       />
-      {/* <spotLight
+      <spotLight
+        castShadow
         ref={spotLight}
         color={0xffffff}
         position={[0, 20, 0]}
-        angle={Math.PI / 4}
-        penumbra={1}
-        decay={2}
-        distance={20}
-        castShadow={true}
-      /> */}
+        intensity={1500}
+        angle={Math.PI / 3}
+      />
     </>
-  )
+  );
 }

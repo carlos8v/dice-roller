@@ -108,9 +108,8 @@ function _Dice(props, ref) {
 
   return (
     <Suspense fallback={null}>
-      <mesh ref={meshRef} position={props.position}>
+      <mesh ref={meshRef} position={props.position} castShadow receiveShadow>
         <boxGeometry args={[1.5, 1.5, 1.5]} />
-        <pointLight color={0xffffff} />
         <meshPhongMaterial
           attach="material-0"
           map={materials[0]}
