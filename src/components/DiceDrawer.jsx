@@ -70,18 +70,12 @@ export function DiceDrawer() {
     rollDices();
   }
 
-  // function handleClear() {
-
-  // }
-
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="fixed bottom-0 left-1/2 z-10 -translate-x-1/2 rounded-t-lg border border-zinc-800 bg-zinc-900 px-4 py-3">
-          <button className="text-base font-medium text-white">
-            Escolher dados
-          </button>
-        </div>
+        <button className="fixed bottom-0 left-1/2 z-10 -translate-x-1/2 rounded-t-lg border border-zinc-800 bg-zinc-900 px-4 py-3 text-base font-medium text-white outline-none transition hover:bg-zinc-950">
+          Escolher dados
+        </button>
       </DrawerTrigger>
       <DrawerContent className="border-zinc-800 bg-zinc-900 outline-none">
         <div className="mx-auto w-full max-w-sm text-white">
@@ -121,7 +115,7 @@ export function DiceDrawer() {
               className="rounded bg-white px-4 py-2 text-center font-medium text-black"
               onClick={handleRoll}
             >
-              Jogar
+              Rolar dados
             </button>
             <DrawerClose asChild>
               <button className="rounded border border-zinc-700 bg-transparent px-4 py-2 text-center font-medium text-white transition hover:bg-zinc-700">
