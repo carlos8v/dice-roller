@@ -3,6 +3,8 @@ import { useDiceStore } from "../stores/dice";
 
 /**
  * @typedef {Object} DiceContext
+ * @property {number} totalValue
+ * @property {(value: number) => void} addValue
  * @property {Array<import('../stores/dice').Dice>} dices
  * @property {number} preparedDices
  * @property {() => void} addDice
@@ -33,9 +35,14 @@ export function DiceProvider({ children }) {
   const addDice = useDiceStore((state) => state.addDice);
   const removeDice = useDiceStore((state) => state.removeDice);
 
+  const totalValue = useDiceStore((state) => state.totalValue);
+  const addValue = useDiceStore((state) => state.addValue);
+
   return (
     <diceContext.Provider
       value={{
+        totalValue,
+        addValue,
         dices,
         preparedDices,
         addDice,

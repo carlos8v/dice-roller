@@ -14,7 +14,7 @@ import { useWorld } from "../contexts/WorldContext";
 
 export function DiceManager() {
   const { world } = useWorld();
-  const { dices } = useDiceContext();
+  const { dices, addValue } = useDiceContext();
 
   /**
    * @type {React.MutableRefObject<Array<DiceRef>>}
@@ -26,8 +26,8 @@ export function DiceManager() {
     dicesRef.current.forEach((dice, idx) => {
       getRandomDirection(dice, idx);
       dice.body.addEventListener("sleep", (e) => {
-        // TODO: remove console.log and display result on screen
-        console.log(dice.getTopsideValue(e));
+        const value = dice.getTopsideValue(e);
+        addValue(value);
       });
       dice.body.allowSleep = true;
     });

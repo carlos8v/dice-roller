@@ -10,6 +10,8 @@ import { diceBodyMaterial } from "../constants/body";
 
 /**
  * @typedef {Object} useDiceStore
+ * @property {number} totalValue
+ * @property {(value: number) => void} addValue
  * @property {Array<Dice>} dices
  * @property {number} preparedDices
  * @property {() => void} addDice
@@ -25,6 +27,9 @@ const MIN_DICES = 0;
  * @type {import('zustand').UseBoundStore<import('zustand').StoreApi<useDiceStore>}
  */
 export const useDiceStore = create((set) => ({
+  totalValue: 0,
+  addValue: (value) =>
+    set(({ totalValue }) => ({ totalValue: totalValue + value })),
   dices: [],
   preparedDices: 0,
   addDice: () =>
@@ -37,6 +42,7 @@ export const useDiceStore = create((set) => ({
     })),
   rollDices: () => {
     set(({ preparedDices }) => ({
+      totalValue: 0,
       dices: [...new Array(preparedDices).keys()].map(createDice),
     }));
   },

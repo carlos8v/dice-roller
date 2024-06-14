@@ -15,7 +15,7 @@ import { useDiceContext } from "../contexts/DiceContext";
 import { classnames } from "../utils/classnames";
 import { shortcuts } from "../utils/shortcuts";
 
-export function Controls() {
+export function DiceDrawer() {
   const [open, setOpen] = useState(false);
 
   const { clearDices, rollDices, preparedDices, addDice, removeDice } =
@@ -24,8 +24,12 @@ export function Controls() {
   useEffect(() => {
     const unsubscribe = shortcuts([
       {
-        key: "i",
+        key: ["i", "space"],
         callback: toggleOpen,
+      },
+      {
+        key: "r",
+        callback: rollDices,
       },
       {
         key: "c",
@@ -65,6 +69,10 @@ export function Controls() {
     setOpen(false);
     rollDices();
   }
+
+  // function handleClear() {
+
+  // }
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
