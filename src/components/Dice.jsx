@@ -35,22 +35,24 @@ function _Dice(props, ref) {
   const meshRef = useRef(null);
 
   const materials = useTexture([
-    "/D6/D6_2.png", // xPlus
-    "/D6/D6_5.png", // xMinus
-    "/D6/D6_1.png", // yPlus
-    "/D6/D6_6.png", // yMinus
-    "/D6/D6_3.png", // zPlus
-    "/D6/D6_4.png", // zMinus
-    "/D6/normal.png",
+    "/d6/2.png", // xPlus
+    "/d6/5.png", // xMinus
+    "/d6/1.png", // yPlus
+    "/d6/6.png", // yMinus
+    "/d6/3.png", // zPlus
+    "/d6/4.png", // zMinus
+    "/d6/normal.png",
   ]);
 
   useEffect(() => {
-    if (!world || !props.body) return;
+    if (!world.current || !props.body) return;
 
     world.current.addBody(props.body);
 
     return () => {
-      world.current.removeBody(props.body);
+      if (world.current) {
+        world.current.removeBody(props.body);
+      }
     };
   }, [world, props.body]);
 
