@@ -72,7 +72,7 @@ export function DiceDrawer() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <button className="fixed bottom-0 left-1/2 z-10 -translate-x-1/2 rounded-t-lg border border-zinc-800 bg-zinc-900 px-4 py-3 text-base font-medium text-white outline-none transition hover:bg-zinc-950">
+        <button className="fixed bottom-0 left-1/2 z-10 -translate-x-1/2 select-none rounded-t-lg border border-zinc-800 bg-zinc-900 px-4 py-3 text-base font-medium text-white outline-none transition hover:bg-zinc-950">
           Escolher dados
         </button>
       </DrawerTrigger>

@@ -5,6 +5,7 @@ import { DiceProvider } from "./contexts/DiceContext";
 
 import { ValueDisplay } from "./components/ValueDisplay";
 import { DiceDrawer } from "./components/DiceDrawer";
+import { CanvasLoader } from "./components/CanvasLoader";
 
 const Canvas = lazy(() => import("./components/Canvas"));
 
@@ -14,7 +15,7 @@ function App() {
       <DiceProvider>
         <ValueDisplay />
         <DiceDrawer />
-        <Suspense fallback={null}>
+        <Suspense fallback={<CanvasLoader />}>
           <Canvas />
         </Suspense>
       </DiceProvider>
