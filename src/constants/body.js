@@ -1,4 +1,4 @@
-import * as CANNON from 'cannon-es'
+import { Material } from "cannon-es";
 
-export const floorBodyMaterial = new CANNON.Material()
-export const diceBodyMaterial = new CANNON.Material()
+export const floorBodyMaterial = new Material();
+export const diceBodyMaterial = new Material();

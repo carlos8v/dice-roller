@@ -1,4 +1,3 @@
-import Mousetrap from "mousetrap";
 import { useEffect, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import {

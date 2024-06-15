@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import * as CANNON from "cannon-es";
+import { Body, Box, Vec3 } from "cannon-es";
 import { diceBodyMaterial } from "../constants/body";
 
 /**
@@ -49,15 +49,43 @@ export const useDiceStore = create((set) => ({
   clearDices: () => set({ dices: [], preparedDices: 0 }),
 }));
 
+const boxVector = new Vec3(0.75, 0.75, 0.75);
+
 function createDice(idx) {
   return {
     id: `${Date.now().toString()}-${idx}`,
-    body: new CANNON.Body({
+    body: new Body({
       mass: 0.3,
       allowSleep: true,
-      shape: new CANNON.Box(new CANNON.Vec3(0.75, 0.75, 0.75)),
+      shape: new Box(boxVector),
       material: diceBodyMaterial,
       sleepTimeLimit: 0.1,
     }),
   };
+}
+
+/**
+ * @param {Body} body
+ * @param {import('three').Mesh} mesh
+ * @param {number} idx
+ */
+export function getRandomDirection(body, mesh, idx) {
+  const yRand = Math.random() * 20;
+  mesh.position.x = -15 - (idx % 3) * 1.5;
+  mesh.position.y = 2 + Math.floor(idx / 3) * 1.5;
+  mesh.position.z = -15 + (idx % 3) * 1.5;
+  mesh.quaternion.x = ((Math.random() * 90 - 45) * Math.PI) / 180;
+  mesh.quaternion.z = ((Math.random() * 90 - 45) * Math.PI) / 180;
+
+  // Update by mesh position
+  body.position.copy(mesh.position);
+  body.quaternion.copy(mesh.quaternion);
+
+  const rand = Math.random() * 5;
+  body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
+  body.angularVelocity.set(
+    20 * Math.random() - 10,
+    20 * Math.random() - 10,
+    20 * Math.random() - 10,
+  );
 }

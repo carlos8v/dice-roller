@@ -1,5 +1,5 @@
+import { World, NaiveBroadphase, ContactMaterial } from "cannon-es";
 import { createContext, useContext, useEffect, useRef } from "react";
-import * as CANNON from "cannon-es";
 
 import { diceBodyMaterial, floorBodyMaterial } from "../constants/body";
 
@@ -7,7 +7,7 @@ const worldContext = createContext({});
 
 /**
  * @typedef {Object} WorldContext
- * @property {React.MutableRefObject<CANNON.World>} world
+ * @property {React.MutableRefObject<World>} world
  */
 
 /**
@@ -17,7 +17,7 @@ export const useWorld = () => useContext(worldContext);
 
 export const WorldProvider = ({ children }) => {
   const world = useRef(
-    new CANNON.World({
+    new World({
       allowSleep: true,
     }),
   );
@@ -26,17 +26,17 @@ export const WorldProvider = ({ children }) => {
     if (!world.current) return;
 
     world.current.gravity.set(0, -9.82 * 20, 0);
-    world.current.broadphase = new CANNON.NaiveBroadphase();
+    world.current.broadphase = new NaiveBroadphase();
     world.current.solver.iterations = 16;
 
     world.current.addContactMaterial(
-      new CANNON.ContactMaterial(floorBodyMaterial, diceBodyMaterial, {
+      new ContactMaterial(floorBodyMaterial, diceBodyMaterial, {
         friction: 0.01,
         restitution: 0.5,
       }),
     );
     world.current.addContactMaterial(
-      new CANNON.ContactMaterial(diceBodyMaterial, diceBodyMaterial, {
+      new ContactMaterial(diceBodyMaterial, diceBodyMaterial, {
         friction: 0,
         restitution: 0.5,
       }),

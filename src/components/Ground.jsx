@@ -1,8 +1,11 @@
-import * as THREE from "three";
+import { DoubleSide } from "three";
+import { Body, Plane, Vec3 } from "cannon-es";
 import { useEffect } from "react";
-import * as CANNON from "cannon-es";
-import { floorBodyMaterial } from "../constants/body";
+
 import { useWorld } from "../contexts/WorldContext";
+import { floorBodyMaterial } from "../constants/body";
+
+const vector = new Vec3(1, 0, 0);
 
 export function Ground() {
   const { world } = useWorld();
@@ -10,16 +13,13 @@ export function Ground() {
   useEffect(() => {
     if (!world.current) return;
 
-    const floorBody = new CANNON.Body({
+    const floorBody = new Body({
       mass: 0,
-      shape: new CANNON.Plane(),
+      shape: new Plane(),
       material: floorBodyMaterial,
     });
 
-    floorBody.quaternion.setFromAxisAngle(
-      new CANNON.Vec3(1, 0, 0),
-      -Math.PI / 2,
-    );
+    floorBody.quaternion.setFromAxisAngle(vector, -Math.PI / 2);
 
     world.current.addBody(floorBody);
 
@@ -33,7 +33,7 @@ export function Ground() {
   return (
     <mesh receiveShadow position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
       <planeGeometry args={[30, 30, 10, 10]} />
-      <meshPhongMaterial color={0xbababa} side={THREE.DoubleSide} />
+      <meshPhongMaterial color={0xbababa} side={DoubleSide} />
     </mesh>
   );
 }
